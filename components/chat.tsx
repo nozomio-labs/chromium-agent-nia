@@ -4,7 +4,7 @@ import { useChat } from "@ai-sdk/react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { ModelSelector } from "@/components/model-selector";
-import { ArrowUpIcon, PlusIcon, SearchIcon, BookOpenIcon, FileTextIcon, GlobeIcon, CopyIcon, CheckIcon, ThumbsUpIcon, ThumbsDownIcon } from "lucide-react";
+import { ArrowUpIcon, PlusIcon, SearchIcon, BookOpenIcon, FileTextIcon, GlobeIcon, CopyIcon, CheckIcon, ThumbsUpIcon, ThumbsDownIcon, GithubIcon } from "lucide-react";
 import Image from "next/image";
 import { useState, useEffect, useRef, useCallback } from "react";
 import type { UIMessage } from "@ai-sdk/react";
@@ -193,6 +193,21 @@ export function Chat() {
         >
           <PlusIcon className="h-4 w-4" />
         </Button>
+        <Button
+          asChild
+          variant="outline"
+          size="icon"
+          className="h-10 w-10 md:h-9 md:w-9 shadow-border-small hover:shadow-border-medium bg-background/80 backdrop-blur-sm border-0 hover:bg-background active:scale-95 md:hover:scale-[1.02] transition-all duration-150 ease"
+        >
+          <a
+            href="https://github.com/nozomio-labs/naval-ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub repository"
+          >
+            <GithubIcon className="h-4 w-4" />
+          </a>
+        </Button>
         <ThemeToggle />
       </div>
       {!hasMessages && (
@@ -346,11 +361,19 @@ export function Chat() {
                     }
                   })}
                   {m.role === "assistant" && status !== "streaming" && (
+                    <>
                     <MessageActions 
                       message={m} 
                       feedback={feedbacks[m.id] || null}
                       onFeedback={(type) => handleFeedback(m.id, type)}
                     />
+                    <div className="mt-3 pt-3 border-t border-border/40 flex items-start gap-2 text-xs text-muted-foreground/70">
+                       <div className="mt-1 w-1.5 h-1.5 rounded-full bg-black dark:bg-white shrink-0" />
+                       <span>
+                         To reduce code hallucinations or give more reliable context to your coding agents, try <a href="https://trynia.ai" target="_blank" rel="noopener noreferrer" className="font-medium text-blue-500 hover:underline transition-all">Nia</a>.
+                       </span>
+                    </div>
+                    </>
                   )}
                 </div>
               ))}
@@ -383,7 +406,7 @@ export function Chat() {
       )}
 
       {hasMessages && (
-        <div className="w-full max-w-4xl mx-auto px-4 md:px-8 pb-6 md:pb-8">
+        <div className="w-full max-w-4xl mx-auto px-4 md:px-8 pb-4 md:pb-6 pt-2">
           <form onSubmit={handleSubmit}>
             <div className="relative rounded-2xl bg-muted/50 dark:bg-muted/30 border border-border/50 shadow-sm hover:shadow-md focus-within:shadow-md focus-within:border-border transition-all duration-200">
               <textarea
@@ -422,32 +445,34 @@ export function Chat() {
         </div>
       )}
 
-      <footer className="pb-8 text-center animate-fade-in" style={{ animationDelay: '200ms' }}>
-        <p className="text-xs md:text-sm text-muted-foreground">
-          Powered by{" "}
-          <a
-            href="https://trynia.ai"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline underline-offset-4 hover:text-foreground transition-colors"
-          >
-            Nia
-          </a>
-          {" "}(
-          <a
-            href="https://nozomio.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline underline-offset-4 hover:text-foreground transition-colors"
-          >
-            Nozomio Labs
-          </a>
-          )
-        </p>
-        <p className="text-xs text-muted-foreground/60 mt-1">
-          Arlan Rakhmetzhanov Production
-        </p>
-      </footer>
+      {!hasMessages && (
+        <footer className="pb-8 text-center animate-fade-in" style={{ animationDelay: '200ms' }}>
+          <p className="text-xs md:text-sm text-muted-foreground">
+            Powered by{" "}
+            <a
+              href="https://trynia.ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline underline-offset-4 hover:text-foreground transition-colors"
+            >
+              Nia
+            </a>
+            {" "}(
+            <a
+              href="https://nozomio.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline underline-offset-4 hover:text-foreground transition-colors"
+            >
+              Nozomio Labs
+            </a>
+            )
+          </p>
+          <p className="text-xs text-muted-foreground/60 mt-1">
+            Arlan Rakhmetzhanov Production
+          </p>
+        </footer>
+      )}
     </div>
   );
 }
