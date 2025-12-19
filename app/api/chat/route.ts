@@ -67,7 +67,6 @@ export async function POST(req: Request) {
     system: CHROMIUM_SYSTEM_PROMPT,
     messages: convertToModelMessages(messages),
     tools: niaChromiumTools,
-    stopWhen: stepCountIs(12),
     onError: (e) => {
       console.error("Error while streaming.", e);
     },
