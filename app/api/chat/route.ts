@@ -1,4 +1,4 @@
-import { convertToModelMessages, streamText, type UIMessage, stepCountIs } from "ai";
+import { convertToModelMessages, streamText, type UIMessage } from "ai";
 import { DEFAULT_MODEL } from "@/lib/constants";
 import { gateway } from "@/lib/gateway";
 import { niaChromiumTools } from "@/lib/nia-tools";
